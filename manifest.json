@@ -1,6 +1,6 @@
 {
-    "name": "oneb_app",
-    "short_name": "oneb_app",
+    "name": "أُنيب",
+    "short_name": "أُنيب",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
