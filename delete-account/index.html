@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>حذف الحساب — أُنيب</title>
+  <meta name="description" content="طريقة حذف حسابك وبياناتك من تطبيق أُنيب، وما الذي يُحذف وما الذي يبقى.">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #002147;
+      --gold: #D4AF37;
+      --bg: #F0F2F5;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --red: #C62828;
+      --blue: #1565C0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+      line-height: 1.8;
+    }
+    header {
+      background: var(--navy);
+      color: #fff;
+      padding: 28px 16px 34px;
+      border-radius: 0 0 24px 24px;
+      text-align: center;
+    }
+    header .brand { color: var(--gold); font-size: 30px; font-weight: 700; margin: 0; }
+    header h1 { font-size: 20px; margin: 6px 0 0; }
+    header p { color: rgba(255,255,255,0.75); margin: 4px 0 0; font-size: 14px; }
+    main { max-width: 720px; margin: 0 auto; padding: 20px 16px 40px; }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px 18px 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    }
+    .card h2 { margin: 0 0 8px; font-size: 17px; color: var(--navy); }
+    .card.red h2 { color: var(--red); }
+    .card.blue h2 { color: var(--blue); }
+    ol, ul { margin: 0; padding-inline-start: 22px; }
+    li { margin-bottom: 4px; }
+    .note { color: var(--muted); font-size: 14px; }
+    .btn {
+      display: block;
+      text-align: center;
+      background: var(--navy);
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 14px;
+      border-radius: 14px;
+      margin-top: 6px;
+    }
+    footer { text-align: center; color: var(--muted); font-size: 13px; padding: 0 16px 28px; }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="brand">أُنيب</p>
+    <h1>حذف الحساب والبيانات</h1>
+    <p>تطبيق أُنيب للمحامين — إنابات الجلسات وأجندة المحامي</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>كيف تحذف حسابك؟</h2>
+      <p class="note">يمكنك حذف حسابك بنفسك في أي وقت من داخل التطبيق، أو من الموقع من أي متصفح دون الحاجة إلى تثبيت التطبيق:</p>
+      <ol>
+        <li>افتح تطبيق أُنيب، أو ادخل إلى <a href="https://oneb-app.com/">oneb-app.com</a> من أي متصفح.</li>
+        <li>سجّل الدخول برقمك النقابي وكلمة المرور.</li>
+        <li>افتح القائمة الجانبية، ثم اختر «الملف الشخصي».</li>
+        <li>انزل إلى أسفل الصفحة واضغط «حذف حسابي».</li>
+        <li>أدخل كلمة المرور للتأكيد، ثم اضغط «حذف حسابي نهائياً».</li>
+      </ol>
+      <a class="btn" href="https://oneb-app.com/">الدخول إلى أُنيب</a>
+    </section>
+
+    <section class="card red">
+      <h2>ما الذي يُحذف نهائياً؟</h2>
+      <ul>
+        <li>حساب الدخول نفسه، فلا يمكن الدخول به بعد الحذف.</li>
+        <li>بياناتك الشخصية: الاسم، والرقم النقابي، والرقم الوطني، والهاتف، والعنوان، والبريد الإلكتروني، والتوقيع الإلكتروني، وصورة الهوية النقابية.</li>
+        <li>جلساتك وأجندتك ومهامك وملاحظاتك وإشعاراتك.</li>
+      </ul>
+      <p class="note">يتم الحذف فوراً عند التأكيد، ويُفقد رصيد النقاط المتبقي في الحساب ولا يمكن استرجاعه.</p>
+    </section>
+
+    <section class="card blue">
+      <h2>ما الذي يبقى ولماذا؟</h2>
+      <ul>
+        <li>طلبات الإنابة المنتهية ووثائقها (ورقة الإنابة القضائية وتعهد حسن سير العمل)، لأنها وثائق قانونية تخص زميلاً آخر طرفاً فيها.</li>
+        <li>سجل حركات النقاط وتذاكر الدعم الفني، لأنها سجلات مالية وتشغيلية مرتبطة بأطراف أخرى.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>قبل الحذف</h2>
+      <p class="note">لا يمكن حذف الحساب وهناك طلبات إنابة قائمة (بانتظار القبول أو مقبولة)، لأن فيها نقاطاً مجمّدة والتزاماً تجاه زميل. أتمّ هذه الطلبات أو ألغِها أولاً، ثم احذف حسابك.</p>
+    </section>
+  </main>
+
+  <footer>أُنيب — oneb-app.com</footer>
+</body>
+</html>
