@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <!-- يُستبدل عند البناء بقيمة --base-href (الجذر "/") -->
   <base href="/">
 
   <meta charset="UTF-8">
+  <!--
+    لا تضع dir="rtl" على وسم html: عناصر الصور التي يعرضها المتصفح داخل التطبيق
+    (مثل صورة الهوية في لوحة التحكم) تنزاح جانباً في صفحة اتجاهها من اليمين.
+    الاتجاه من اليمين محصور في #landing و #oneb-splash فقط، والتطبيق يضبط اتجاهه بنفسه.
+  -->
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -278,14 +283,14 @@
 </head>
 <body>
   <!-- شاشة تحميل التطبيق -->
-  <div id="oneb-splash" aria-hidden="true">
+  <div id="oneb-splash" dir="rtl" aria-hidden="true">
     <img src="brand/oneb-logo.jpg" alt="">
     <div class="spin"></div>
     <p>جارٍ تحميل أُنيب…</p>
   </div>
 
   <!-- الصفحة التعريفية -->
-  <div id="landing">
+  <div id="landing" dir="rtl">
     <header class="top">
       <div class="wrap">
         <nav aria-label="القائمة الرئيسية">
