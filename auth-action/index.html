@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- الصفحة تحمل رمز الاستعادة في عنوانها: لا تُرسله لأي موقع آخر ولا تُفهرس -->
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <title>تغيير كلمة المرور — أُنيب</title>
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- خط Cairo يُحمَّل دون أن يؤخر ظهور الصفحة (تظهر بخط النظام ثم يتبدل) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
+  <style>
+    /* ألوان أُنيب نفسها (كحلي وذهبي) ونمط شاشات التطبيق: كتلة كحلية بحواف
+       سفلية دائرية، بطاقة بيضاء بحواف 16، حقول بحواف 14، وزر كحلي بنص ذهبي */
+    :root {
+      --navy: #002147;
+      --navy-2: #0B1D38;
+      --gold: #D4AF37;
+      --bg: #F0F2F5;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #d1d5db;
+      --red: #C62828;
+      --red-bg: #FDECEA;
+      --green: #2E7D32;
+      --green-bg: #E8F5E9;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+      line-height: 1.8;
+    }
+    header {
+      background: var(--navy);
+      color: #fff;
+      padding: 34px 16px 40px;
+      border-radius: 0 0 24px 24px;
+      text-align: center;
+    }
+    .emblem {
+      width: 84px;
+      height: 84px;
+      margin: 0 auto 12px;
+      border-radius: 19px;
+      background: var(--navy-2);
+      border: 1.2px solid rgba(212, 175, 55, 0.55);
+      box-shadow: 0 0 40px rgba(212, 175, 55, 0.22);
+      overflow: hidden;
+    }
+    .emblem img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    header h1 { margin: 0; font-size: 21px; }
+    header p { margin: 2px 0 0; color: rgba(255, 255, 255, 0.72); font-size: 14px; }
+    main {
+      max-width: 460px;
+      margin: -18px auto 0;
+      padding: 0 16px 40px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px 18px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+    }
+    .state[hidden] { display: none !important; }
+    .title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 6px;
+      color: var(--navy);
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .title svg { flex: none; }
+    .lead { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
+    .account {
+      display: inline-block;
+      direction: ltr;
+      unicode-bidi: embed;
+      color: var(--navy);
+      font-weight: 700;
+      word-break: break-all;
+    }
+    label {
+      display: block;
+      margin: 0 0 6px;
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .field { position: relative; margin-bottom: 14px; }
+    .field input {
+      width: 100%;
+      height: 50px;
+      padding: 0 14px 0 48px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--navy);
+      font: inherit;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .field input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px var(--gold);
+    }
+    .eye {
+      position: absolute;
+      left: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--navy);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+    .eye:focus-visible { outline: 2px solid var(--gold); }
+    .hint { margin: -6px 0 14px; color: var(--muted); font-size: 12.5px; }
+    .error {
+      margin: 0 0 14px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: var(--red-bg);
+      color: var(--red);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .error[hidden] { display: none; }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      height: 50px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--navy);
+      color: var(--gold);
+      font: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn:disabled { background: #e5e7eb; color: #6b7280; cursor: default; }
+    .btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+    .spinner {
+      width: 34px;
+      height: 34px;
+      margin: 8px auto 10px;
+      border: 3px solid #e5e7eb;
+      border-top-color: var(--navy);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .btn .spinner {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      border-width: 2px;
+      border-color: rgba(107, 114, 128, 0.35);
+      border-top-color: #6b7280;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 2.4s; } }
+    .center { text-align: center; }
+    .badge {
+      width: 64px;
+      height: 64px;
+      margin: 4px auto 12px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+    }
+    .badge.ok { background: var(--green-bg); color: var(--green); }
+    .badge.bad { background: var(--red-bg); color: var(--red); }
+    .center .title { justify-content: center; }
+    .note { margin: 14px 0 0; color: var(--muted); font-size: 13px; text-align: center; }
+    footer { text-align: center; color: var(--muted); font-size: 12px; padding: 0 16px 24px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="emblem"><img src="../brand/oneb-logo.jpg" alt="شعار أُنيب"></div>
+    <h1>تغيير كلمة المرور</h1>
+    <p>حسابك في أُنيب</p>
+  </header>
+
+  <main>
+    <div class="card">
+      <!-- 1) التحقق من الرابط -->
+      <section id="state-loading" class="state center" aria-live="polite">
+        <div class="spinner" role="presentation"></div>
+        <p class="lead">جارٍ التحقق من الرابط…</p>
+      </section>
+
+      <!-- 2) نموذج كلمة المرور الجديدة -->
+      <section id="state-form" class="state" hidden>
+        <h2 class="title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          اختر كلمة مرور جديدة
+        </h2>
+        <p class="lead">للحساب المرتبط بالبريد <span class="account" id="account-email"></span></p>
+        <form id="reset-form" novalidate>
+          <label for="new-password">كلمة المرور الجديدة</label>
+          <div class="field">
+            <input id="new-password" type="password" autocomplete="new-password" dir="ltr" required>
+            <button type="button" class="eye" data-target="new-password" aria-label="إظهار كلمة المرور"></button>
+          </div>
+          <p class="hint">6 أحرف أو أرقام على الأقل.</p>
+          <label for="confirm-password">تأكيد كلمة المرور</label>
+          <div class="field">
+            <input id="confirm-password" type="password" autocomplete="new-password" dir="ltr" required>
+            <button type="button" class="eye" data-target="confirm-password" aria-label="إظهار كلمة المرور"></button>
+          </div>
+          <p id="form-error" class="error" role="alert" hidden></p>
+          <button id="submit-btn" class="btn" type="submit">حفظ كلمة المرور</button>
+        </form>
+      </section>
+
+      <!-- 3) تم التغيير -->
+      <section id="state-done" class="state center" hidden>
+        <div class="badge ok">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        </div>
+        <h2 class="title">تم تغيير كلمة المرور بنجاح</h2>
+        <p class="lead">يمكنك الآن الدخول إلى أُنيب برقمك النقابي وكلمة المرور الجديدة.</p>
+        <a class="btn" href="/#/">الدخول إلى أُنيب</a>
+        <p class="note">أو افتح تطبيق أُنيب على هاتفك وادخل منه.</p>
+      </section>
+
+      <!-- 4) رابط غير صالح أو منتهٍ -->
+      <section id="state-invalid" class="state center" hidden>
+        <div class="badge bad">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>
+        </div>
+        <h2 class="title">تعذّر استخدام هذا الرابط</h2>
+        <p class="lead" id="invalid-reason">هذا الرابط غير صالح أو استُخدم من قبل.</p>
+        <p class="lead">اطلب رابطاً جديداً من شاشة الدخول في أُنيب عبر زر «نسيت كلمة المرور».</p>
+        <a class="btn" href="/#/">الذهاب إلى أُنيب</a>
+      </section>
+    </div>
+  </main>
+  <footer>أُنيب — oneb-app.com</footer>
+
+  <script>
+    (function () {
+      // روابط Firebase الأخرى (تأكيد البريد، استرجاع البريد...) لا يستعملها
+      // التطبيق، فتُحوَّل كما هي إلى صفحة Firebase الافتراضية حتى تبقى تعمل
+      var DEFAULT_HANDLER = 'https://oneeb-legal-app.firebaseapp.com/__/auth/action';
+      // مفتاح الويب العام نفسه المستخدم في التطبيق (ويأتي أيضاً داخل الرابط)
+      var WEB_API_KEY = 'AIzaSyA7Sl9pmr87K3db8LRAs_9yrNeGn_CIkzA';
+
+      var params = new URLSearchParams(window.location.search);
+      var mode = params.get('mode');
+      var oobCode = params.get('oobCode');
+      var apiKey = params.get('apiKey') || WEB_API_KEY;
+
+      if (mode && mode !== 'resetPassword') {
+        window.location.replace(DEFAULT_HANDLER + window.location.search);
+        return;
+      }
+
+      var states = ['loading', 'form', 'done', 'invalid'];
+      function show(name) {
+        states.forEach(function (s) {
+          document.getElementById('state-' + s).hidden = s !== name;
+        });
+      }
+
+      // رسائل الأخطاء بالعربية (رموز Firebase كما يعيدها الخادم)
+      function messageFor(code) {
+        code = String(code || '');
+        if (code.indexOf('EXPIRED_OOB_CODE') === 0) return 'انتهت صلاحية هذا الرابط.';
+        if (code.indexOf('INVALID_OOB_CODE') === 0) return 'هذا الرابط غير صالح أو استُخدم من قبل.';
+        if (code.indexOf('USER_DISABLED') === 0) return 'هذا الحساب موقوف. تواصل مع الدعم الفني.';
+        if (code.indexOf('USER_NOT_FOUND') === 0 || code.indexOf('EMAIL_NOT_FOUND') === 0) {
+          return 'لم يعد هذا الحساب موجوداً.';
+        }
+        if (code.indexOf('WEAK_PASSWORD') === 0) {
+          return 'زميلي العزيز، كلمة المرور ضعيفة جداً. استخدم 6 أحرف أو أرقام على الأقل.';
+        }
+        if (code === 'NETWORK') return 'تعذّر الاتصال. تحقق من الإنترنت ثم أعد المحاولة.';
+        return 'حدث خطأ غير متوقع. أعد المحاولة بعد قليل.';
+      }
+      function isLinkProblem(code) {
+        code = String(code || '');
+        return ['EXPIRED_OOB_CODE', 'INVALID_OOB_CODE', 'USER_DISABLED', 'USER_NOT_FOUND', 'EMAIL_NOT_FOUND']
+          .some(function (c) { return code.indexOf(c) === 0; });
+      }
+
+      // واجهة Firebase نفسها التي تستخدمها صفحته الافتراضية: بلا كلمة مرور
+      // تتحقق من الرابط وتعيد البريد، ومع كلمة المرور تحفظها
+      function resetPassword(body) {
+        return fetch('https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=' + encodeURIComponent(apiKey), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        }).then(function (response) {
+          return response.json().catch(function () { return {}; }).then(function (data) {
+            if (!response.ok) throw ((data.error && data.error.message) || 'UNKNOWN');
+            return data;
+          });
+        }, function () { throw 'NETWORK'; });
+      }
+
+      function showInvalid(code) {
+        document.getElementById('invalid-reason').textContent = messageFor(code);
+        show('invalid');
+      }
+
+      // إظهار/إخفاء كلمة المرور
+      var eyeOpen = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+      var eyeClosed = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.1A10.4 10.4 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.2M6.6 6.6C3.9 8.4 2 12 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>';
+      Array.prototype.forEach.call(document.querySelectorAll('.eye'), function (button) {
+        button.innerHTML = eyeOpen;
+        button.addEventListener('click', function () {
+          var input = document.getElementById(button.getAttribute('data-target'));
+          var visible = input.type === 'text';
+          input.type = visible ? 'password' : 'text';
+          button.innerHTML = visible ? eyeOpen : eyeClosed;
+          button.setAttribute('aria-label', visible ? 'إظهار كلمة المرور' : 'إخفاء كلمة المرور');
+        });
+      });
+
+      var form = document.getElementById('reset-form');
+      var errorBox = document.getElementById('form-error');
+      var submit = document.getElementById('submit-btn');
+
+      function showError(text) {
+        errorBox.textContent = text;
+        errorBox.hidden = false;
+      }
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        errorBox.hidden = true;
+        // مثل التطبيق: تُحذف المسافات من أول كلمة المرور وآخرها عند الدخول
+        var password = document.getElementById('new-password').value.trim();
+        var confirm = document.getElementById('confirm-password').value.trim();
+        if (!password || !confirm) return showError('يرجى إدخال كلمة السر الجديدة وتأكيدها');
+        if (password !== confirm) return showError('كلمتا السر غير متطابقتين');
+
+        submit.disabled = true;
+        submit.innerHTML = '<span class="spinner" role="presentation"></span>جارٍ الحفظ…';
+        resetPassword({ oobCode: oobCode, newPassword: password }).then(function () {
+          show('done');
+        }, function (code) {
+          submit.disabled = false;
+          submit.textContent = 'حفظ كلمة المرور';
+          if (isLinkProblem(code)) showInvalid(code);
+          else showError(messageFor(code));
+        });
+      });
+
+      if (!oobCode) {
+        showInvalid('INVALID_OOB_CODE');
+        return;
+      }
+      resetPassword({ oobCode: oobCode }).then(function (data) {
+        document.getElementById('account-email').textContent = data.email || '';
+        show('form');
+      }, showInvalid);
+    })();
+  </script>
+</body>
+</html>
